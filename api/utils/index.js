@@ -11,7 +11,7 @@ const docClient = new AWS.DynamoDB.DocumentClient();
 function verifyToken(req,res,next) {
   const token = req.headers.authorization;  
   const secret = process.env.JWT_SECRET || "HELLOOOO";
-  jwt.verify(token, secrets.jwtSecret, (err, decodedToken) => {
+  jwt.verify(token, secret, (err, decodedToken) => {
     if (err) {
       res.status(400).json({error: "Invalid token"})
     } else {
