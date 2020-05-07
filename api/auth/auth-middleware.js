@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-const docClient = require("../utils");
+const { docClient } = require("../utils");
 
 module.exports = {
   validateRegister: (req, res, next) => {
