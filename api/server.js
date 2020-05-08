@@ -14,7 +14,7 @@ server.use(cors());
 server.use(express.json());
 
 server.use('/api/auth', authRoutes);
-// server.use(verifyToken);
+server.use(verifyToken);
 server.use('/api/users', userRoutes);
 server.use('/api/budget', budgetRoutes);
 

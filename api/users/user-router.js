@@ -1,5 +1,6 @@
 const express = require("express");
 const { docClient } = require("../utils");
+const ddbModel = require('./user-model');
 
 const router = express.Router();
 
@@ -21,57 +22,10 @@ router.get("/", (req,res) => {
 });
 
 router.delete("/", async (req, res) => {
-  const userParams = {
-    TableName: 'Users',
-    Key: {
-      username: req.decoded.username,
-    },
-    ConditionExpression: 'attribute_exists(username)'
-  };
-
-  // NEED BOTH NAME AND USERNAME
-  const budgetParams = {
-    RequestItems: {
-     "Budgets": [
-       {
-         DeleteRequest: {
-           Key: { 'name': '*' , 'username': 'jordandoan4'}
-         }
-       }
-     ]
-    }} 
-    docClient.delete(userParams , (err,data) => {
-      if (err) {
-        console.log(err);
-        res.json(err)
-      }
-    });
-
-    // docClient.delete(userParams, (err, data) => {
-    //   if (err) {
-    //     console.log(1);
-    //     console.log(err);
-    //     res.json({message: "Unsuccessful deletion."});
-    //   } else {
-    //     docClient.batchWrite(budgetParams, (err, data) => {
-    //       if (err) {
-    //         console.log(2);
-    //         console.log(err);
-    //         res.json({message: "Unsuccessful deletion."});
-    //       } else {
-    //         res.send('hi');
-    //       }
-    //     })
-    //   }
-    // })
-    // docClient.batchWrite(budgetParams, (err, data) => {
-    //   if (err) {
-    //     console.log(2);
-    //     console.log(err);
-    //     res.json({message: "Unsuccessful deletion."});
-    //   } else {
-    //     res.send('hi');
-    //   }
-    // })
+  ddbModel.queryAllBudgets(req.decoded.username)
+    .then(ddbModel.deleteAllBudgets)
+    .then(_ => ddbModel.deleteUser(req.decoded.username))
+    .then(_ => res.status(201).json({message: "Successful deletion!"}))
+    .catch(err => res.status(500).json({message: "Unsuccessful deletion."}));
 });
 module.exports = router;
