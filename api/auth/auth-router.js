@@ -15,11 +15,7 @@ router.post("/register", validateRegister, (req, res) => {
       ...req.register
     },
     // Checks for nonexisting username before inserting
-    Expected: {
-      'username': {
-        Exists: false
-      }
-    }
+    ConditionExpression: 'attribute_not_exists(username)'
   };
 
   docClient.put(params, function(err, data) {

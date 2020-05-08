@@ -46,6 +46,7 @@ const createDelRequests = (request) => {
     }
   }
 }
+
 module.exports = {
   queryAllBudgets,
   deleteAllBudgets,
