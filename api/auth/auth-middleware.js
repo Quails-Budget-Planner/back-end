@@ -28,14 +28,14 @@ module.exports = {
       TableName: "Users",
       Key: {
         username: req.login.username
-      }
+      },
     };
 
     docClient.get(params, (err,data) => {
       if (err) {
         res.status(404).json({message: "Incorrect Credentials"});
       } else {
-        if (bcrypt.compareSync(req.login.password, data.Item.password)) {
+        if (data.Item && bcrypt.compareSync(req.login.password, data.Item.password)) {
           next();
         } else {
           res.status(404).json({message: "Incorrect Credentials"});
