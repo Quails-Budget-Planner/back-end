@@ -1,68 +1,15 @@
 const express = require('express');
 
-const docClient = require('../utils');
+const { docClient } = require('../utils');
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
-	res.json({ message: 'Hello from budgets router' });
-});
-
-// POST /api/budgets endpoint
+// POST /api/budgets endpoint - Functional!
 router.post('/', ({ body }, res) => {
 	const params = {
 		TableName: 'Budgets',
 		Item: {
 			...body,
-			// username: 'jonathan',
-			// name: 'test budget name',
-			// location: 'test location',
-			// annual_salary: 50000,
-			// additional_income: 10000,
-			// gambling_winnings: 5000,
-			// housing: {
-			// 	rent_or_mortgage: 900,
-			// 	utilities: 100,
-			// },
-			// food: {
-			// 	groceries: 200,
-			// 	restaurants: 200,
-			// 	social: 100,
-			// },
-			// medical: {
-			// 	insurance: 100,
-			// 	expenses: 50,
-			// },
-			// transportation: {
-			// 	car_payment: 200,
-			// 	insurance: 50,
-			// 	gas: 150,
-			// 	misc: 50,
-			// 	public_transit: 0,
-			// 	ride_share: 0,
-			// },
-			// other_necessary: {
-			// 	childcare: 0,
-			// 	other_dependents: 0,
-			// 	cellphone: 15,
-			// 	internet: 50,
-			// 	debt_payments: 0,
-			// },
-			// personal_expenses: {
-			// 	fitness: 50,
-			// 	clothing: 50,
-			// 	electronics: 50,
-			// 	entertainment: 50,
-			// 	hygiene: 20,
-			// 	travel: 0,
-			// 	other: 0,
-			// },
-			// savings: {
-			// 	retirement: 0,
-			// 	general: 0,
-			// 	investments: 0,
-			// 	other: 0,
-			// },
 		},
 		Expected: {
 			name: {
@@ -79,14 +26,15 @@ router.post('/', ({ body }, res) => {
 			);
 			res.status(500).json({ message: 'Error adding new budget' });
 		} else {
-			console.log('Added item:', JSON.stringify(data, null, 2));
-			res.status(201).json(data);
+			// console.log('Added item:', JSON.stringify(data, null, 2));
+			// res.status(201).json(data);
+			res.status(201).json({ message: 'New budget successfully added' });
 		}
 	});
 });
 
 // PUT /api/budgets endpoint
-router.put('/', (req, res) => {
+router.put('/', ({ body }, res) => {
 	docClient.update(params, function (err, data) {
 		if (err) {
 			console.error(
@@ -95,21 +43,19 @@ router.put('/', (req, res) => {
 			);
 			res.status(500).json({ message: 'Failed to update budget' });
 		} else {
-			console.log('UpdateItem succeeded:', JSON.stringify(data, null, 2));
-			res.status(200).json(data);
+			// console.log('UpdateItem succeeded:', JSON.stringify(data, null, 2));
+			// res.status(200).json(data);
+			res.status(200).json({ message: 'Budget successfully updated' });
 		}
 	});
 });
 
 // DELETE /api/budgets endpoint - Functional!
 router.delete('/', ({ body }, res) => {
-	const { username, name } = body;
-
 	const params = {
 		TableName: 'Budgets',
 		Key: {
-			username,
-			name,
+			...body,
 		},
 	};
 
