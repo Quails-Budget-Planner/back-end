@@ -39,7 +39,8 @@ router.put("/", async (req, res) => {
     .then(data => res.json({message: "Update successful!"}))  
     .catch(data => res.json(data))
 
-})
+});
+
 router.delete("/", async (req, res) => {
   ddbModel.queryAllBudgets(req.decoded.username)
     .then(ddbModel.deleteAllBudgets)
