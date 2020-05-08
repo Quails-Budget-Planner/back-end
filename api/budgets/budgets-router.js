@@ -5,11 +5,12 @@ const { docClient } = require('../utils');
 const router = express.Router();
 
 // POST /api/budget endpoint - Functional!
-router.post('/', ({ body }, res) => {
+router.post('/', ({ body, decoded }, res) => {
 	const params = {
 		TableName: 'Budgets',
 		Item: {
 			...body,
+			username: decoded.username,
 		},
 		Expected: {
 			name: {
@@ -34,7 +35,7 @@ router.post('/', ({ body }, res) => {
 });
 
 // PUT /api/budget endpoint - Functional!
-router.put('/', ({ body }, res) => {
+router.put('/', ({ body, decoded }, res) => {
 	const params = {
 		RequestItems: {
 			Budgets: [
@@ -42,6 +43,7 @@ router.put('/', ({ body }, res) => {
 					PutRequest: {
 						Item: {
 							...body,
+							username: decoded.username,
 						},
 					},
 				},
@@ -65,8 +67,9 @@ router.put('/', ({ body }, res) => {
 });
 
 // DELETE /api/budget endpoint - Functional!
-router.delete('/', ({ body }, res) => {
-	const { username, name } = body;
+router.delete('/', ({ body, decoded }, res) => {
+	const { username } = decoded;
+	const { name } = body;
 
 	const params = {
 		TableName: 'Budgets',
