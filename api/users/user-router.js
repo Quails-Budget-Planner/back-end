@@ -24,6 +24,8 @@ router.get("/", (req,res) => {
 
 router.put("/", async (req, res) => {
   // can only edit display name right now
+  // do i want to verify old password before changing?
+  // changing username = changing hashkey on budget
   const params = {
     TableName: 'Users',
     Key: { username: req.decoded.username },
