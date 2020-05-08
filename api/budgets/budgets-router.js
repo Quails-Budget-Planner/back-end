@@ -4,7 +4,7 @@ const { docClient } = require('../utils');
 
 const router = express.Router();
 
-// POST /api/budgets endpoint - Functional!
+// POST /api/budget endpoint - Functional!
 router.post('/', ({ body }, res) => {
 	const params = {
 		TableName: 'Budgets',
@@ -33,7 +33,7 @@ router.post('/', ({ body }, res) => {
 	});
 });
 
-// PUT /api/budgets endpoint
+// PUT /api/budget endpoint - Functional!
 router.put('/', ({ body }, res) => {
 	const { username, name } = body;
 
@@ -98,7 +98,10 @@ router.put('/', ({ body }, res) => {
 	});
 });
 
-// DELETE /api/budgets endpoint - Functional!
+// PUT /api/budget/budgetname endpoint - Functional!
+// router.put('/budgetname', ({ body }, res) => {})
+
+// DELETE /api/budget endpoint - Functional!
 router.delete('/', ({ body }, res) => {
 	const { username, name } = body;
 
