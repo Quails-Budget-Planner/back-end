@@ -1,5 +1,4 @@
 const { docClient } = require("../utils");
-const AWS = require("aws-sdk");
 
 const queryAllBudgets = username => {
   const params = {
