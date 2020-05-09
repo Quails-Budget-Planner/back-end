@@ -1,9 +1,11 @@
 const express = require('express');
 
 const { docClient } = require('../utils');
+const { verifyToken } = require("../utils");
 
 const router = express.Router();
 
+router.use(verifyToken);
 // POST /api/budget endpoint - Functional!
 router.post('/', ({ body, decoded }, res) => {
 	const params = {
