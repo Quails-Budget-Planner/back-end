@@ -1,8 +1,11 @@
 const express = require("express");
 const { docClient } = require("../utils");
 const ddbModel = require('./user-model');
+const { verifyToken } = require("../utils");
 
 const router = express.Router();
+
+router.use(verifyToken);
 
 router.get("/", (req,res) => {
   const params = {
