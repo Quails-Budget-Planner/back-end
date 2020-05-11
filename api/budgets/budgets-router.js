@@ -36,7 +36,7 @@ router.post('/', ({ body, decoded }, res) => {
 	});
 });
 
-// GET /api/budget endpoint -
+// GET /api/budget endpoint - Functional!
 router.get('/', ({ decoded }, res) => {
 	const params = {
 		TableName: 'Budgets',
