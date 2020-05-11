@@ -1,7 +1,7 @@
 const express = require('express');
 
 const { docClient } = require('../utils');
-const { verifyToken } = require("../utils");
+const { verifyToken } = require('../utils');
 
 const router = express.Router();
 
@@ -32,6 +32,28 @@ router.post('/', ({ body, decoded }, res) => {
 			// console.log('Added item:', JSON.stringify(data, null, 2));
 			// res.status(201).json(data);
 			res.status(201).json({ message: 'New budget successfully added' });
+		}
+	});
+});
+
+// GET /api/budget endpoint -
+router.get('/', ({ decoded }, res) => {
+	const params = {
+		TableName: 'Budgets',
+		KeyConditionExpression: '#nn = :uu',
+		ExpressionAttributeNames: {
+			'#nn': 'username',
+		},
+		ExpressionAttributeValues: {
+			':uu': decoded.username,
+		},
+	};
+
+	docClient.query(params, function (err, data) {
+		if (err) {
+			console.error('Unable to query. Error:', JSON.stringify(err, null, 2));
+		} else {
+			res.status(200).json(data);
 		}
 	});
 });
