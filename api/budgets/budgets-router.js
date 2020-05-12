@@ -6,6 +6,7 @@ const { verifyToken } = require('../utils');
 const router = express.Router();
 
 router.use(verifyToken);
+
 // POST /api/budget endpoint - Functional!
 router.post('/', ({ body, decoded }, res) => {
 	const params = {
@@ -91,9 +92,8 @@ router.put('/', ({ body, decoded }, res) => {
 });
 
 // DELETE /api/budget endpoint - Functional!
-router.delete('/', ({ body, decoded }, res) => {
-	const { username } = decoded;
-	const { name } = body;
+router.delete('/', ({ decoded }, res) => {
+	const { username, name } = decoded;
 
 	const params = {
 		TableName: 'Budgets',
@@ -111,7 +111,6 @@ router.delete('/', ({ body, decoded }, res) => {
 			);
 			res.status(500).json({ message: 'Error deleting the budget' });
 		} else {
-			console.log(data);
 			// console.log('DeleteItem succeeded:', JSON.stringify(data, null, 2));
 			res.status(200).json({ message: 'The budget has been deleted' });
 		}
