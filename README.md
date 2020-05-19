@@ -5,8 +5,8 @@
 
 # APIs
 - ## Auth 
-- - Onboarding
+ - Onboarding
 - ## Budget
-- - Managing budgets
+ - Managing budgets
 - ## Users
-- - Managing user account
+ - Managing user account
