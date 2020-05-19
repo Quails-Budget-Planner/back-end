@@ -5,6 +5,21 @@ const { verifyToken } = require("../utils");
 
 const router = express.Router();
 
+
+router.get("/all", (req, res) => {
+  const params = {
+    TableName: 'Users',
+  }
+  docClient.scan(params).promise()
+    .then(data => {
+      const newItems = data.Items.map(item => {
+        return {username: item.username}
+      });
+      res.json({items: newItems});
+    })
+    .catch(err => res.json(err));
+})
+
 router.use(verifyToken);
 
 router.get("/", (req,res) => {

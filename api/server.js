@@ -12,6 +12,11 @@ const { verifyToken } = require('./utils');
 server.use(helmet());
 server.use(cors());
 server.use(express.json());
+server.use(express.urlencoded({ extended: true}))
+
+server.get('/', (req,res) => {
+  res.send('hello world');
+});
 
 server.use('/api/auth', authRoutes);
 server.use('/api/users', userRoutes);
